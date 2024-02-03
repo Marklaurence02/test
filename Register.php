@@ -17,8 +17,11 @@
             if(isset($_POST['submit'])){
                 $username = $_POST['username'];
                 $email = $_POST['email'];
+                $address = $_POST['Address'];
+                $school = $_POST['School'];
                 $age = $_POST['Age'];
                 $password = $_POST['password'];
+
 
                 // Verify if email is unique
                 $verify_query = mysqli_query($con, "SELECT Email FROM Users WHERE Email ='$email'");
@@ -30,7 +33,7 @@
                     echo "<a href='javascript:self.history.back()'><button class='btn'>Go Back</button>";
                 } else {
                     // Insert user into the database
-                    mysqli_query($con, "INSERT INTO users (Username, Email, Age, Password) VALUES ('$username', '$email', '$age', '$password')") or die("Error Occurred");
+                    mysqli_query($con, "INSERT INTO users (Username, Email, Age, Password, School, Address) VALUES ('$username', '$email', '$age', '$password','$school','$address')") or die("Error Occurred");
 
                     echo "<div class='message'>
                             <p>Registration Successful</p>
@@ -54,8 +57,20 @@
 
                 <div class="field input">
                     <label for="age">Age</label>
-                    <input type="Age" name="Age" id="Age" required>
+                    <input type="number" name="Age" id="Age" required>
                 </div>
+
+                <div class="field input">
+                    <label for="School">School</label>
+                    <input type="text" name="School" id="school" required>
+                </div>
+
+
+                <div class="field input">
+                    <label for="Address">Address</label>
+                    <input type="text" name="Address" id="address" required>
+                </div>
+
 
                 <div class="field input">
                     <label for="password">Password</label>
