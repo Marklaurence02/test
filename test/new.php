@@ -24,13 +24,31 @@
 
                 <div class="field">
                     <input type="submit"class="btn" name="submit" value="Login">
-                </div>
-
+                    </div>
                 <div class="link">
                     Don't have an account? <a href="Register.php">Sign up now</a>
+
                 </div>
-            </form>
+         </form>
         </div>
     </div>
 </body>
 </html>
+
+<?php
+
+    if(isset($_POST["submit"])){
+     $username = filter_input(INPUT_POST, "username", FILTER_SANITIZE_SPECIAL_CHARS);
+     $password = filter_input(INPUT_POST, "password", FILTER_SANITIZE_SPECIAL_CHARS);
+
+     if ($username == "Mark Laurence" && $password == "12345678"){
+         // Correct username and password, redirect to home.php
+         header("Location: home.php");
+         exit();
+     }
+     else{
+        echo "<script>alert('Wrong Username or Password!')</script>";
+     }  
+
+}
+?>
