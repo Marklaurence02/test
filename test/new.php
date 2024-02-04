@@ -27,7 +27,7 @@ session_start();
                     $_SESSION['username'] = $row['Username'];
                     $_SESSION['age'] = $row['Age'];
                     $_SESSION['id'] = $row['Id'];
-                    header("Location: home.php");
+                    header("Location: Home.php");
                     exit();
                 } else {
                     echo "<div class='message'>
