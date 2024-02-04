@@ -8,7 +8,9 @@
     <title>User Registration</title>
 </head>
 <body>
+    <div transition-style="in:circle:center">
     <div class="container">
+
         <div class="box form-box">
 
             <?php
@@ -21,7 +23,6 @@
                 $school = $_POST['School'];
                 $age = $_POST['Age'];
                 $password = $_POST['password'];
-                $userType = $_POST['userType'];  // Added for user type
 
                 // Verify if email is unique
                 $verify_query = mysqli_query($con, "SELECT Email FROM Users WHERE Email ='$email'");
@@ -32,13 +33,27 @@
                           </div><br>";
                     echo "<a href='javascript:self.history.back()'><button class='btn'>Go Back</button>";
                 } else {
+                    if (isset($_POST['role'])){
+                     $role = $_POST['role'];
+                    if($role == "student"){
                     // Insert user into the database
-                    mysqli_query($con, "INSERT INTO users (Username, Email, Age, Password, School, Address, UserType) VALUES ('$username', '$email', '$age', '$password','$school','$address', '$userType')") or die("Error Occurred");
+                    mysqli_query($con, "INSERT INTO users (Username, Email, Age, Password, School, Address) VALUES ('$username', '$email', '$age', '$password','$school','$address')") or die("Error Occurred");
 
                     echo "<div class='message'>
                             <p>Registration Successful</p>
                           </div><br>";
                     echo "<a href='new.php'><button class='btn'>Login Now</button>";
+                    }
+                    elseif($role == "teacher"){
+                         // Insert user into the database
+                    mysqli_query($con, "INSERT INTO teachers (Username, Email, Age, Password, School, Address) VALUES ('$username', '$email', '$age', '$password','$school','$address')") or die("Error Occurred");
+
+                    echo "<div class='message'>
+                            <p>Registration Successful</p>
+                          </div><br>";
+                    echo "<a href='new.php'><button class='btn'>Login Now</button>";
+                    }
+                }
                 }
             } else {
             ?>
@@ -65,22 +80,21 @@
                     <input type="text" name="School" id="school" required>
                 </div>
 
+
                 <div class="field input">
                     <label for="Address">Address</label>
                     <input type="text" name="Address" id="address" required>
                 </div>
 
-                <div class="field input">
-                    <label for="userType">User Type</label>
-                    <select name="userType" id="userType" required>
-                        <option value="student">Student</option>
-                        <option value="teacher">Teacher</option>
-                    </select>
-                </div>
 
                 <div class="field input">
                     <label for="password">Password</label>
                     <input type="password" name="password" id="password" required>
+                </div>
+
+                <div class="radio-container">
+                    <input type="radio" value="student" name="role" id="student" required>Student
+                    <input type="radio" value="teacher" name="role" id="student" required>Teacher
                 </div>
 
                 <div class="field">
@@ -94,6 +108,7 @@
             <?php } ?>
 
         </div>
+    </div>
     </div>
 </body>
 </html>
