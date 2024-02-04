@@ -22,7 +22,6 @@
                 $age = $_POST['Age'];
                 $password = $_POST['password'];
 
-
                 // Verify if email is unique
                 $verify_query = mysqli_query($con, "SELECT Email FROM Users WHERE Email ='$email'");
 
@@ -32,6 +31,9 @@
                           </div><br>";
                     echo "<a href='javascript:self.history.back()'><button class='btn'>Go Back</button>";
                 } else {
+                    if (isset($_POST['role'])){
+                     $role = $_POST['role'];
+                    if($role == "student"){
                     // Insert user into the database
                     mysqli_query($con, "INSERT INTO users (Username, Email, Age, Password, School, Address) VALUES ('$username', '$email', '$age', '$password','$school','$address')") or die("Error Occurred");
 
@@ -39,6 +41,23 @@
                             <p>Registration Successful</p>
                           </div><br>";
                     echo "<a href='new.php'><button class='btn'>Login Now</button>";
+                    }
+                    elseif($role == "teacher"){
+                         // Insert user into the database
+                    mysqli_query($con, "INSERT INTO teachers (Username, Email, Age, Password, School, Address) VALUES ('$username', '$email', '$age', '$password','$school','$address')") or die("Error Occurred");
+
+                    echo "<div class='message'>
+                            <p>Registration Successful</p>
+                          </div><br>";
+                    echo "<a href='new.php'><button class='btn'>Login Now</button>";
+                    }
+                    else {
+                        echo "<div class='message'>
+                              <p>Please select a role</p>
+                              </div> <br>";
+                       echo "<a href='Register.php'><button class='btn'>Go Back</button>";
+                    }
+                }
                 }
             } else {
             ?>
@@ -75,6 +94,11 @@
                 <div class="field input">
                     <label for="password">Password</label>
                     <input type="password" name="password" id="password" required>
+                </div>
+
+                <div class="radio-container">
+                    <input type="radio" value="student" name="role" id="student">Student
+                    <input type="radio" value="teacher" name="role" id="student">Teacher
                 </div>
 
                 <div class="field">
