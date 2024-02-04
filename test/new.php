@@ -1,3 +1,6 @@
+<?php
+    session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,6 +13,37 @@
 <body>
     <div class="container">
         <div class="box form-box">
+            <?php
+
+                include("config.php");
+                if(isset($_POST['submit'])){
+                    $email = mysqli_real_escape_string($con,$_POST['email']);
+                    $password = mysqli_real_escape_string($con,$_POST['password']);
+
+                    $result=mysqli_query($con,"SELECT * FROM users WHERE Email='$email' AND Password='$password'") or die("Select Error");
+                    $row = mysqli_fetch_assoc($result);
+
+                    if(is_array($row) && !empty($row)){
+                        $_SESSION['VALID'] = $row['Email'];
+                        $_SESSION['username'] = $row['Username'];
+                        $_SESSION['age'] = $row['Age'];
+                        $_SESSION['id'] = $row['Id'];
+                        $_SESSION['school'] = $row['School'];
+                        $_SESSION['address'] = $row['Address'];
+                    }else{
+                        echo "<div class='message'>
+                        <p>Wrong Username or Password</p>
+                      </div><br>";
+                echo "<a href='index.php'><button class='btn'>Go Back</button>";
+                    }
+                    if(isset($_SESSION['valid']));{
+                    header("Location: home.php");
+                    }
+                }else{
+
+                
+
+            ?>
             <header>Login</header>
             <form action="" method="post">
                 <div class="field input">
@@ -24,31 +58,14 @@
 
                 <div class="field">
                     <input type="submit"class="btn" name="submit" value="Login">
-                    </div>
+                </div>
+
                 <div class="link">
                     Don't have an account? <a href="Register.php">Sign up now</a>
-
                 </div>
-         </form>
+            </form>
         </div>
+        <?php } ?>
     </div>
 </body>
 </html>
-
-<?php
-
-    if(isset($_POST["submit"])){
-     $username = filter_input(INPUT_POST, "username", FILTER_SANITIZE_SPECIAL_CHARS);
-     $password = filter_input(INPUT_POST, "password", FILTER_SANITIZE_SPECIAL_CHARS);
-
-     if ($username == "Mark Laurence" && $password == "12345678"){
-         // Correct username and password, redirect to home.php
-         header("Location: home.php");
-         exit();
-     }
-     else{
-        echo "<script>alert('Wrong Username or Password!')</script>";
-     }  
-
-}
-?>
