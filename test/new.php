@@ -11,7 +11,8 @@ session_start();
     <title>Login</title>
 </head>
 <body>
-    <div class="container">
+    <div transition-style="in:circle:center">
+    <div class="container"> 
         <div class="box form-box">
             <?php
             include("config.php");
@@ -58,6 +59,7 @@ session_start();
             </form>
             <?php } ?>
         </div>
+    </div>
     </div>
 </body>
 </html>
