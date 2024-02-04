@@ -19,6 +19,7 @@
     <title>Home</title>
 </head>
 <body>
+<div transition-style="in:circle:center">
     <div class="nav">
         <div class="logo">
             <p>Logo</p>
@@ -60,6 +61,7 @@
             </div>
         </div>
     </div>
+ </div>
 </main>
 </body>
 </html>
